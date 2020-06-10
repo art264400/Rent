@@ -1,0 +1,30 @@
+﻿@model Rent.Models.Product[]
+
+@{
+    ViewBag.Title = "BrowseItems";
+}
+
+<h2>BrowseItems</h2>
+
+<table class="table">
+
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            <img src="@item.PhotoUrl" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>
+    </tr>
+    }
+
+</table>

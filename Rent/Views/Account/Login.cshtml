@@ -1,0 +1,23 @@
+﻿@model Rent.Models.Tag.LoginTag
+@{
+    ViewBag.Title = "Аутентификация";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m=>m.Login)
+        @Html.EditorFor(m=>m.Login)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.EditorFor(m => m.Password)
+    </div>
+    <div class="form-group">
+        <a href="Registration" value="Регистрация" class="btn btn-block btn-success"></a>
+    </div>
+    <input type="submit" value="Войти"/>
+}

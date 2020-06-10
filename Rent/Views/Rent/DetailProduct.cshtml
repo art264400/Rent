@@ -1,0 +1,42 @@
+﻿@model Rent.Models.Product
+
+@{
+    ViewBag.Title = "DetailProduct";
+}
+
+<h2>DetailProduct</h2>
+
+<div>
+    <h4>Product</h4>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.Discription)
+        @Html.DisplayFor(model => model.Discription)
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.PhotoUrl)
+        @Html.DisplayFor(model => model.PhotoUrl)
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.Category.Name)
+        @Html.DisplayFor(model => model.Category.Name)
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(model => model.User.Name)
+        @Html.DisplayFor(model => model.User.Name)
+    </div>
+
+    @using (Html.BeginForm("RequestToRent", "Rent", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.DisplayNameFor(model => model.Price)
+            <label/>
+        </div>
+        @Html.HiddenFor(m => m.Id)
+        <input type="submit" class="btn btn-block btn-success" />
+        @*@Html.ActionLink("Отправить запрос на аренду", "RequestToRent", "Rent", new {Id = Model.Id}, new {@class = "btn btn-block btn-success"})*@
+    }
+</div>

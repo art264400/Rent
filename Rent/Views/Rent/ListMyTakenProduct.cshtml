@@ -1,0 +1,33 @@
+﻿@model Rent.Models.TakenProduct[]
+@{
+    ViewBag.Title = "Список взятых мною вещей";
+}
+
+<h2>RequestedAd</h2>
+<table class="table table-bordered table-hover table-striped table-condensed">
+    <th>Товар</th>
+    <th>Фотография</th>
+    <th>Суммарная стоимость</th>
+    <th>Дата бронирования начала</th>
+    <th>Дата бронирования окончания</th>
+    <th>Action</th>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Product.Name</td>
+            <td><img src="@item.Product.PhotoUrl" /></td>
+            <td>@item.Cost</td>
+            <td>@item.DateTaken</td>
+            <td>@item.DateReturn</td>
+            <th>
+                @{
+                    if (item.TenantProof==false && item.LessorProof==true)
+                    {
+                        @Html.ActionLink("Нажмите, чтобы подтвердить, что вы получили товар", "CheckedTenantProof", "Rent", new { idTakenProduct = item.Id }, new { @class = "btn btn-block btn-success" })
+                    }
+                   
+                }
+            </th>
+        </tr>
+    }
+</table>
