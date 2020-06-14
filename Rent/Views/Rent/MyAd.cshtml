@@ -5,8 +5,10 @@
 }
 
 <h2>BrowseItems</h2>
-
-<table class="table">
+<div class="col-md-6">
+    @Html.ActionLink("Добавить объявление", "CreateProduct", "Rent", null, new { @class = "btn btn-block btn-success"})
+</div>
+<table class="table table-hover table-striped">
 
 
     @foreach (var item in Model)

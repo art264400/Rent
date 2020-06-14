@@ -33,10 +33,10 @@
     {
         <div class="form-group">
             @Html.DisplayNameFor(model => model.Price)
-            <label/>
+            <input type="text" name="Price" value="@Model.Price" readonly/>
         </div>
         @Html.HiddenFor(m => m.Id)
-        <input type="submit" class="btn btn-block btn-success" />
+        <input type="submit" value="Запросить товар" class="btn btn-block btn-success" />
         @*@Html.ActionLink("Отправить запрос на аренду", "RequestToRent", "Rent", new {Id = Model.Id}, new {@class = "btn btn-block btn-success"})*@
     }
 </div>

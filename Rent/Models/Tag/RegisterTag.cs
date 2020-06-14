@@ -36,7 +36,12 @@ namespace Rent.Models.Tag
         [Required]
         [Display(Name = "Дом")]
         public string Home { get; set; }
-
-
+        [Required]
+        [Display(Name = "Дом")]
+        public string Home { get; set; }
+        [Display(Name = "Широта")]
+        public string Latitude { get; set; }
+        [Display(Name = "Долгота")]
+        public string Longitude { get; set; }
     }
 }

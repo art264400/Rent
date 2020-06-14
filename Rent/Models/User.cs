@@ -20,7 +20,8 @@ namespace Rent.Models
         public decimal SumMoney { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
-
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
         //User()
         //{
         //}

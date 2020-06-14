@@ -4,8 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Newtonsoft.Json;
 using Rent.Interfaces;
 using Rent.Models.Tag;
+using Rent.Models.Util;
+using RestSharp;
 
 namespace Rent.Controllers
 {
@@ -56,12 +59,13 @@ namespace Rent.Controllers
         {
             if (ModelState.IsValid)
             {
+                var geocode = registerTag.City + ", " + registerTag.Street + ", " + registerTag.Home;
+                _rentService.AddLongAndLatiByAddress(geocode, registerTag);
                 if (!_rentService.RegistrationCreateUser(registerTag))
                 {
                     ModelState.AddModelError("Email", "Пользователь с таким email уже существует");
                     return View(registerTag);
                 }
-
                 FormsAuthentication.SignOut();
                 FormsAuthentication.SetAuthCookie(registerTag.Email, true);
                 return RedirectToAction("Browse_item", "Rent");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Rent.Interfaces;
 using Rent.Models;
 
@@ -16,7 +17,11 @@ namespace Rent.Controllers
         public RentController(IRentService rentService)
         {
             _rentService = rentService;
-        } 
+        }
+        public ActionResult _Map()
+        {
+            return PartialView();
+        }
         // GET: Rent
         public ActionResult Browse_item()
         {
@@ -44,7 +49,7 @@ namespace Rent.Controllers
             return RedirectToAction("MyAd");
         }
         [HttpPost]
-        public ActionResult RequestToRent(int id,decimal Price)
+        public ActionResult RequestToRent(int id,decimal Price=0)
         {
             if(!_rentService.CheckedIsTakenProductByProductId(id)) return HttpNotFound();
             //Если нельзя снять то выдаем ошибку, а не 404
@@ -82,9 +87,14 @@ namespace Rent.Controllers
         {
             var userId = _rentService.GetUserByLogin(User.Identity.Name).Id;
             //помечаем что арендодатель подтвердил возврат товара
-            if(_rentService.ChekedLessorReturnProof(idTakenProduct, userId)) return RedirectToAction("Browse_item");
+            if(!_rentService.ChekedLessorReturnProof(idTakenProduct, userId)) return RedirectToAction("Browse_item");
+            
+            var takenProduct = _rentService.GetTakenProductById(idTakenProduct);
+            var product = takenProduct.Product;
+            
+            _rentService.PayMoneyForUserByLogin(takenProduct.Cost,User.Identity.Name);
             //убираем пометку взятия
-            _rentService.CheckedNoIsTakenProductByProductId(idTakenProduct);
+            _rentService.CheckedNoIsTakenProductByProductId(takenProduct.ProductId);
             //помечаем на удаление запись взятия товаря
             _rentService.DeleteTakenProductById(idTakenProduct,userId);
             return RedirectToAction("RequestedAd");

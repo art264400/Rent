@@ -20,10 +20,12 @@ namespace Rent.Interfaces
         bool UpdateUserById(int id);
         bool VerifyUserByLoginAndPassword(LoginTag loginModel);
         bool WriteOffMoneyFromUserByLogin(decimal money,string login);
+        bool PayMoneyForUserByLogin(decimal money, string login);
         bool RegistrationCreateUser(RegisterTag registerTag);
 
         Product[] GetAllProducts();
         Product GetProductById(int id);
+
         Product[] GetProductByUserId(int id);
         bool CheckedIsTakenProductByProductId(int id);
         bool CheckedNoIsTakenProductByProductId(int id);
@@ -35,11 +37,14 @@ namespace Rent.Interfaces
         TakenProduct[] GetAllTakenProductsByUserId(int userId);
         //получить список, товаров, которые я взял в аренду
         TakenProduct[] GetAllListMyTakenProduct(int userId);
+        TakenProduct GetTakenProductById(int takenProductId);
         bool CreateTakenProduct(TakenProduct takenProduct);
         bool ChekedLessorProof(int idProof, int UserId); 
         bool ChekedLessorReturnProof(int idProof, int UserId);
         bool CheckedTenantProof(int idProof, int UserId);
 
         Category[] GetAllGategories();
+
+        RegisterTag AddLongAndLatiByAddress(string address,RegisterTag registerTag);
     }
 }

@@ -4,10 +4,13 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 using Rent.Context;
 using Rent.Interfaces;
 using Rent.Models;
 using Rent.Models.Tag;
+using Rent.Models.Util;
+using RestSharp;
 using NotImplementedException = System.NotImplementedException;
 
 namespace Rent.Services
@@ -159,7 +162,7 @@ namespace Rent.Services
         {
             using (var db = new RentContext())
             {
-                return db.Products.Include(m => m.User).Include(m => m.Category).Where(m => m.UserId == id).ToArray();
+                return db.Products.Include(m => m.User).Include(m => m.Category).Where(m => m.UserId == id && m.IsDeleted==false).ToArray();
             }
         }
 
@@ -256,6 +259,8 @@ namespace Rent.Services
                 City = registerTag.City,
                 Street = registerTag.Street,
                 Home = registerTag.Home,
+                Longitude = registerTag.Longitude,
+                Latitude = registerTag.Latitude,
                 IsDeleted = false,
                 RoleId = 2,
                 SumMoney = 0
@@ -268,6 +273,51 @@ namespace Rent.Services
                 db.SaveChanges();
                 return true;
             }
+        }
+
+        public bool PayMoneyForUserByLogin(decimal money, string login)
+        {
+            using (var db = new RentContext())
+            {
+                var user=db.Users.FirstOrDefault(m => m.Login == login);
+                if (user == null) return false;
+                user.SumMoney += money;
+                db.Users.AddOrUpdate(user);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public TakenProduct GetTakenProductById(int takenProductId)
+        {
+            using (var db = new RentContext())
+            {
+                return db.TakenProducts.FirstOrDefault(m => m.Id == takenProductId);
+            }
+        }
+
+        public RegisterTag AddLongAndLatiByAddress(string address,RegisterTag registerTag)
+        {
+            try
+            {
+                var client = new RestClient("https://geocode-maps.yandex.ru/1.x/");
+                var apikey = "a2676e6b-4540-4a36-9b7b-f7d6e77be65b";
+                var geocode = address;
+                var format = "json";
+                var request = new RestRequest("?apikey=" + apikey + "&geocode=" + geocode + "&format=" + format, Method.GET);
+                var content = client.Execute(request).Content;
+                MainClass res = JsonConvert.DeserializeObject<MainClass>(content);
+                String pos = res.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
+                String[] words = pos.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                registerTag.Latitude = words[0];
+                registerTag.Longitude = words[1];
+                return registerTag;
+            }
+            catch (Exception e)
+            {
+                return registerTag;
+            }
+           
         }
     }
 }
