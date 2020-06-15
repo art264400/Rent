@@ -20,7 +20,20 @@ namespace Rent.ExtensionsForHelpers
         {
             IRentService _rentService=new EntityRentService();
             var username=_rentService.GetUserByLogin(value.ToString());
-            var mvcHtmlString = new MvcHtmlString("Баланс"+username.SumMoney.ToString());
+            var mvcHtmlString = new MvcHtmlString("Баланс: "+username.SumMoney.ToString());
+            return mvcHtmlString;
+        }
+        public static MvcHtmlString Action(this MvcHtmlString value)
+        {
+            TagBuilder a = new TagBuilder("a");
+            a.Attributes.Add("href","#");
+            a.Attributes.Add("class","dropdown-toggle");
+            a.Attributes.Add("data-toggle","dropdown");
+            a.Attributes.Add("role","button");
+            a.Attributes.Add("aria-haspopup","true");
+            a.Attributes.Add("aria-expanded","false");
+            a.SetInnerText("Админ");
+            var mvcHtmlString = new MvcHtmlString(a.ToString());
             return mvcHtmlString;
         }
     }

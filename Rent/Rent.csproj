@@ -215,6 +215,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PayController.cs" />
     <Compile Include="ExtensionsForHelpers\AdminHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -229,10 +230,12 @@
     </Compile>
     <Compile Include="Interfaces\IRentService.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\Tag\LoginTag.cs" />
+    <Compile Include="Models\Tag\OrderModel.cs" />
     <Compile Include="Models\Tag\RegisterTag.cs" />
     <Compile Include="Models\TakenProduct.cs" />
     <Compile Include="Models\User.cs" />
@@ -292,6 +295,11 @@
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Rent\_Map.cshtml" />
+    <Content Include="Views\Admin\ListUsers.cshtml" />
+    <Content Include="Views\Admin\ListCategories.cshtml" />
+    <Content Include="Views\Admin\UpdateCategory.cshtml" />
+    <Content Include="Views\Rent\UpdateProduct.cshtml" />
+    <Content Include="Views\Pay\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,6 +22,7 @@ namespace Rent.Interfaces
         bool WriteOffMoneyFromUserByLogin(decimal money,string login);
         bool PayMoneyForUserByLogin(decimal money, string login);
         bool RegistrationCreateUser(RegisterTag registerTag);
+        bool DeleteUserById(int id);
 
         Product[] GetAllProducts();
         Product GetProductById(int id);
@@ -30,6 +31,8 @@ namespace Rent.Interfaces
         bool CheckedIsTakenProductByProductId(int id);
         bool CheckedNoIsTakenProductByProductId(int id);
         bool CreateProduct(Product product);
+        bool DeleteProductById(int id);
+        bool UpdateProduct(Product product);
 
 
         void DeleteTakenProductById(int id,int userId);
@@ -44,7 +47,16 @@ namespace Rent.Interfaces
         bool CheckedTenantProof(int idProof, int UserId);
 
         Category[] GetAllGategories();
+        bool CreateCategory(Category category);
+        bool DeleteCategoryById(int id);
+        bool UpdateCategory(Category category);
+        Category GetCategoryById(int id);
 
         RegisterTag AddLongAndLatiByAddress(string address,RegisterTag registerTag);
+
+        bool CreateOrder(Order order);
+        Order LastOrderByUserId(int id);
+        Order GetOrderById(int id);
+        bool UpdateOrder(Order order);
     }
 }

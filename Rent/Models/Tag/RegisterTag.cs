@@ -36,12 +36,15 @@ namespace Rent.Models.Tag
         [Required]
         [Display(Name = "Дом")]
         public string Home { get; set; }
-        [Required]
-        [Display(Name = "Дом")]
-        public string Home { get; set; }
         [Display(Name = "Широта")]
         public string Latitude { get; set; }
         [Display(Name = "Долгота")]
         public string Longitude { get; set; }
+        [Required(ErrorMessage = "Нужно ввести номер телефона")]
+        [Display(Name = "Номер телефона +7")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Некорректный номер телефона, должно быть 10 цифр")]
+        public string PhoneNumber { get; set; }
+        
     }
 }

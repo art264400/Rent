@@ -11,7 +11,39 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav style="top:-52px" class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Все объявления", "Browse_item", "Rent")
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Личное<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Взятые мной в аренду", "ListMyTakenProduct", "Rent")</li>
+                        <li>@Html.ActionLink("Мои объявления", "MyAd", "Rent")</li>
+                        <li>@Html.ActionLink("Активные", "RequestedAd", "Rent")</li>
+                        <li>@Html.ActionLink("Пополнить счет", "Index", "Pay")</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Выйти", "Logout", "Account")</li>
+                        <li role="separator" class="divider"></li>
+                    </ul>
+                </li>
+               @**<li class="dropdown">
+                    
+                    @Html.ActionLink("Любой текст", "ListMyTakenProduct", "Rent").Action().If(User.IsInRole("Admin"))
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Категории", "ListCategories", "Admin").If(User.IsInRole("1"))</li>
+                        <li>@Html.ActionLink("Пользователи", "ListUsers", "Admin")</li>
+                    </ul>
+                </li>*@
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>Здравствуйте, @User.Identity.Name</li>
+                <li style="padding-top: 20px; right: 127px;">@Html.Name(User.Identity.Name).Money() рублей</li>
+               
+            </ul>
+        </div>
+    </nav>
+    @*@*<nav style="top: -52px" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Brand</a>
@@ -19,7 +51,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     @*<li><a href="#">Link </a></li>*@
-                    <li>@Html.ActionLink("Все объявления", "Browse_item", "Rent")</li>
+    @*<li>@Html.ActionLink("Все объявления", "Browse_item", "Rent")</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Личное<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -53,8 +85,8 @@
                     </li>.0
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+        </div><!-- /.container-fluid -->*@
+
     <div style="margin-top: -80px;" class="container body-content">
         @RenderBody()
         <hr />

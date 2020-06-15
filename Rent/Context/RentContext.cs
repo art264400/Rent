@@ -14,5 +14,6 @@ namespace Rent.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<TakenProduct> TakenProducts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

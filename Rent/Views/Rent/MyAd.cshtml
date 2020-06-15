@@ -1,21 +1,28 @@
 ﻿@model Rent.Models.Product[]
 
 @{
-    ViewBag.Title = "BrowseItems";
+    ViewBag.Title = "Мои объявления";
 }
 
-<h2>BrowseItems</h2>
+<h2>Мои объявления</h2>
 <div class="col-md-6">
     @Html.ActionLink("Добавить объявление", "CreateProduct", "Rent", null, new { @class = "btn btn-block btn-success"})
 </div>
 <table class="table table-hover table-striped">
+    <tr>
+        <th>Фотография</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Категория</th>
+        <th>Описание</th>
+        <th>Действие</th>
+    </tr>
 
-
-    @foreach (var item in Model)
-    {
+        @foreach (var item in Model)
+        {
     <tr>
         <td>
-            <img src="@item.PhotoUrl" />
+            <img src="@item.PhotoUrl" class="browse-item-img" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -26,7 +33,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.Category.Name)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discription)
+        </td>
+        <td>
+            @Html.ActionLink("Удалить", "DeleteProduct", "Rent", new { Id = item.Id }, new { @class = "btn btn-block btn-success" })
+            @Html.ActionLink("Изменить", "UpdateProduct", "Rent", new { Id = item.Id }, new { @class = "btn btn-block btn-success" })
+        </td>
     </tr>
-    }
+        }
 
 </table>

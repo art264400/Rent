@@ -3,22 +3,29 @@
     ViewBag.Title = "Аутентификация";
     Layout = null;
 }
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<div class="form-horizontal" style="margin-left: 120px">
+    <h2 style="margin-left: 176px;">Login</h2>
 
-<h2>Login</h2>
+    @using (Html.BeginForm())
+    {
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="form-group">
-        @Html.LabelFor(m=>m.Login)
-        @Html.EditorFor(m=>m.Login)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password)
-        @Html.EditorFor(m => m.Password)
-    </div>
-    <div class="form-group">
-        <a href="Registration" value="Регистрация" class="btn btn-block btn-success"></a>
-    </div>
-    <input type="submit" value="Войти"/>
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+   
+    <input style="margin-left: 176px;" type="submit" value="Войти" />
 }
+<a href="Registration" style="margin-left: 176px;" class="btn btn-success">Регистрация</a>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

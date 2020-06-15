@@ -3,15 +3,14 @@
 @{
     ViewBag.Title = "BrowseItems";
 }
-@Html.Partial("_Map")
 <style>
     .stationInfo {
         height: 150px;
         width: 250px;
     }
 </style>
-
-<div id="canvas" class="col-md-12" style="width: 300px;height: 300px ">
+<div id="map" style="width: 900px; height: 400px;"></div>
+@*<div id="canvas"  style="width: 100px;height: 100px ">*@
 
     <!--Устанавливаем секцию scripts, которая затем будет рендериться на мастер-странице -->
     @section scripts {
@@ -36,7 +35,7 @@
             };
 
             // Встраиваем гугл-карты в элемент на странице и получаем объект карты
-            var map = new google.maps.Map(document.getElementById("canvas"), mapOptions);
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
             // Настраиваем красный маркер, который будет использоваться для центральной точки
             var myLatlng = new google.maps.LatLng(55.159897, 61.402554);
@@ -91,7 +90,7 @@
     {
         <tr>
             <td>
-                <img src="@item.PhotoUrl" />
+                <img class="browse-item-img" src="@item.PhotoUrl" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

@@ -9,32 +9,36 @@
 <div>
     <h4>Product</h4>
     <div class="form-group">
-        @Html.DisplayNameFor(model => model.Name)
+        <label>Название</label>:
         @Html.DisplayFor(model => model.Name)
     </div>
     <div class="form-group">
-        @Html.DisplayNameFor(model => model.Discription)
+        <label>Описание</label>:
         @Html.DisplayFor(model => model.Discription)
     </div>
     <div class="form-group">
-        @Html.DisplayNameFor(model => model.PhotoUrl)
-        @Html.DisplayFor(model => model.PhotoUrl)
+        <label>Фото</label>:
+        <img src=@Model.PhotoUrl style="width: 200px; height: 120px;" />
     </div>
     <div class="form-group">
-        @Html.DisplayNameFor(model => model.Category.Name)
+        <label>Категория</label>:
         @Html.DisplayFor(model => model.Category.Name)
     </div>
     <div class="form-group">
-        @Html.DisplayNameFor(model => model.User.Name)
+        <label>Имя владельца: </label>
         @Html.DisplayFor(model => model.User.Name)
+    </div>
+    <div class="form-group">
+        <label>Номер телефона владельца</label>:
+        @Html.DisplayFor(model => model.User.PhoneNumber)
     </div>
 
     @using (Html.BeginForm("RequestToRent", "Rent", FormMethod.Post))
     {
-        <div class="form-group">
-            @Html.DisplayNameFor(model => model.Price)
-            <input type="text" name="Price" value="@Model.Price" readonly/>
-        </div>
+    <div class="form-group">
+        <label>Цена аренды</label>:
+        <input type="text" name="Price" value="@Model.Price" readonly />
+    </div>
         @Html.HiddenFor(m => m.Id)
         <input type="submit" value="Запросить товар" class="btn btn-block btn-success" />
         @*@Html.ActionLink("Отправить запрос на аренду", "RequestToRent", "Rent", new {Id = Model.Id}, new {@class = "btn btn-block btn-success"})*@

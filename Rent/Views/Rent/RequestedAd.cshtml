@@ -16,7 +16,7 @@
     {
     <tr>
         <td>@item.Product.Name</td>
-        <td><img src="@item.Product.PhotoUrl" /></td>
+        <td><img src="@item.Product.PhotoUrl" style="width: 200px; height: 120px;" /></td>
         <td>@item.Cost</td>
         <td>@item.DateTaken</td>
         <td>@item.DateReturn</td>
@@ -25,6 +25,7 @@
             @{
                 if (!item.LessorProof)
                 {
+                    @Html.ActionLink("Отказать пользователю", "Refusal", "Rent", new { idTakenProduct = item.Id }, new { @class = "btn btn-block btn-primary" })
                     @Html.ActionLink("Нажмите, чтобы подтвердить, что вы отдали товар", "ChekedLessorProof", "Rent", new { idTakenProduct = item.Id }, new { @class = "btn btn-block btn-success" })
                 }
                 else if (!item.LessonReturnProof)

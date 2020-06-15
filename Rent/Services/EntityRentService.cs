@@ -261,6 +261,7 @@ namespace Rent.Services
                 Home = registerTag.Home,
                 Longitude = registerTag.Longitude,
                 Latitude = registerTag.Latitude,
+                PhoneNumber = registerTag.PhoneNumber,
                 IsDeleted = false,
                 RoleId = 2,
                 SumMoney = 0
@@ -308,7 +309,7 @@ namespace Rent.Services
                 var content = client.Execute(request).Content;
                 MainClass res = JsonConvert.DeserializeObject<MainClass>(content);
                 String pos = res.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
-                String[] words = pos.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                String[] words =pos.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 registerTag.Latitude = words[0];
                 registerTag.Longitude = words[1];
                 return registerTag;
@@ -318,6 +319,117 @@ namespace Rent.Services
                 return registerTag;
             }
            
+        }
+
+        public bool DeleteUserById(int id)
+        {
+            using (var db = new RentContext())
+            {
+                var user= db.Users.FirstOrDefault(m => m.Id == id && m.IsDeleted==false);
+                if (user == null) return false;
+                user.IsDeleted = true;
+                db.Users.AddOrUpdate(user);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool CreateCategory(Category category)
+        {
+            using (var db = new RentContext())
+            {
+                db.Categories.AddOrUpdate(category);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteCategoryById(int id)
+        {
+            using (var db = new RentContext())
+            {
+                var category = db.Categories.FirstOrDefault(m => m.Id == id && m.IsDeleted == false);
+                if (category == null) return false;
+                category.IsDeleted = true;
+                db.Categories.AddOrUpdate(category);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool UpdateCategory(Category category)
+        {
+            using (var db = new RentContext())
+            {
+                db.Categories.AddOrUpdate(category);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public Category GetCategoryById(int id)
+        {
+            using (var db = new RentContext())
+            {
+                return db.Categories.FirstOrDefault(m => m.Id == id);
+            }
+        }
+
+        public bool DeleteProductById(int id)
+        {
+            using (var db = new RentContext())
+            {
+                var product = db.Products.FirstOrDefault(m => m.Id == id && m.IsDeleted==false);
+                if (product == null) return false;
+                product.IsDeleted = true;
+                db.Products.AddOrUpdate(product);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool UpdateProduct(Product product)
+        {
+            using (var db = new RentContext())
+            {
+                db.Products.AddOrUpdate(product);
+                db.SaveChanges();
+                return true;
+            }
+        }
+        public bool CreateOrder(Order order)
+        {
+            using (var db = new RentContext())
+            {
+                db.Orders.Add(order);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public Order LastOrderByUserId(int id)
+        {
+            using (var db = new RentContext())
+            {
+                return db.Orders.Include(m => m.User).FirstOrDefault(m => m.UserId == id && m.IsDeleted==false);
+            }
+        }
+
+        public Order GetOrderById(int id)
+        {
+            using (var db = new RentContext())
+            {
+                return db.Orders.Include(m=>m.User).FirstOrDefault(m => m.Id == id);
+            }
+        }
+        public bool UpdateOrder(Order order)
+        {
+            using (var db = new RentContext())
+            {
+                db.Orders.AddOrUpdate(order);
+                db.SaveChanges();
+                return true;
+            }
         }
     }
 }

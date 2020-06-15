@@ -14,7 +14,7 @@ namespace Rent.Controllers
     {
         public IRentService _rentService;
 
-        public RentController(IRentService rentService)
+            public RentController(IRentService rentService)
         {
             _rentService = rentService;
         }
@@ -51,7 +51,9 @@ namespace Rent.Controllers
         [HttpPost]
         public ActionResult RequestToRent(int id,decimal Price=0)
         {
-            if(!_rentService.CheckedIsTakenProductByProductId(id)) return HttpNotFound();
+            var userMoney = _rentService.GetUserByLogin(User.Identity.Name).SumMoney;
+            if(userMoney<Price) return HttpNotFound();
+            if (!_rentService.CheckedIsTakenProductByProductId(id)) return HttpNotFound();
             //Если нельзя снять то выдаем ошибку, а не 404
             if (!_rentService.WriteOffMoneyFromUserByLogin(Price, User.Identity.Name)) return HttpNotFound();
 
@@ -110,6 +112,36 @@ namespace Rent.Controllers
             var userId = _rentService.GetUserByLogin(User.Identity.Name).Id;
             _rentService.CheckedTenantProof(idTakenProduct, userId);
             return RedirectToAction("ListMyTakenProduct");
+        }
+
+        public ActionResult Refusal(int idTakenProduct)
+        {
+            var takenProduct = _rentService.GetTakenProductById(idTakenProduct);
+            if (User.Identity.Name != takenProduct.Product.User.Login) return HttpNotFound();
+            _rentService.CheckedNoIsTakenProductByProductId(takenProduct.ProductId);
+            var userId = _rentService.GetUserByLogin(User.Identity.Name).Id;
+            _rentService.DeleteTakenProductById(idTakenProduct, userId);
+            return RedirectToAction("ListMyTakenProduct");
+        }
+
+        public ActionResult DeleteProduct(int id)
+        {
+            _rentService.DeleteProductById(id);
+            return RedirectToAction("MyAd");
+        }
+
+        public ActionResult UpdateProduct(int id)
+        {
+            SelectList category = new SelectList(_rentService.GetAllGategories(), "Id", "Name");
+            ViewBag.Category = category;
+            var product =_rentService.GetProductById(id);
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult UpdateProduct(Product product)
+        {
+            _rentService.UpdateProduct(product);
+            return RedirectToAction("MyAd");
         }
     }
 }
