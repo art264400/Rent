@@ -8,7 +8,7 @@ using Rent.Models;
 
 namespace Rent.Providers
 {
-    public class CustomRoleProvider:RoleProvider
+    public class CustomRoleProvider : RoleProvider
     {
         public override bool IsUserInRole(string username, string roleName)
         {
@@ -39,14 +39,15 @@ namespace Rent.Providers
                     Role role = db.Roles.Find(user.RoleId);
                     if (role != null)
                     {
-                        roles = new string[] { role.Name };
+                        roles = new string[] {role.Name};
                     }
                 }
             }
+
             return roles;
         }
 
-        public override void CreateRole(string roleName)
+    public override void CreateRole(string roleName)
         {
             throw new NotImplementedException();
         }

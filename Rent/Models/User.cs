@@ -37,10 +37,5 @@ namespace Rent.Models
         public string Longitude { get; set; }
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
-
-        
-        //User()
-        //{
-        //}
     }
 }

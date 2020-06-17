@@ -8,7 +8,7 @@ using Rent.Models;
 
 namespace Rent.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class AdminController : Controller
     {
         public IRentService _rentService;
